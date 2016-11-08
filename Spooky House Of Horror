@@ -1,0 +1,296 @@
+/*
+Enrique Espinet
+eespi065@fiu.edu
+COP 2210 - [Fall 2014]
+Assignment #4
+Date: 11/20/14
+
+Name of original coder: Vanessa Loaiza
+ */
+package javaapplication21;
+
+import java.net.MalformedURLException;
+import java.net.URL;
+import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
+
+/**
+ *
+ * @author Enrique
+ */
+public class SpookyHouseReCoding {
+
+    /**
+     * @param args the command line arguments
+     */
+    public static void main(String[] args) throws MalformedURLException {
+       String currentRoom = null;
+       boolean gameOver = false;
+       String options = null;
+       
+        URL hauntedHouse = new URL("http://www.bostonrealestateexperts.com/agent_files/haunted_house_v0_2_by_teksu-d5bvcsj.png"); //photo of main house
+        URL entranceDoor = new URL("http://i48.photobucket.com/albums/f223/Vannesa_Loaiza/frontDoor_zps567c25c6.png"); //photo of entrance door
+        URL chest = new URL("http://fc09.deviantart.net/fs71/f/2012/124/4/9/chest_of_demons_by_shadow_of_the_wolf-d4yir3l.jpg"); //photo of the chest
+        URL chestGhost = new URL("http://i48.photobucket.com/albums/f223/Vannesa_Loaiza/chestGhost_zps836850bf.png"); //photo of the ghost that appears from chest
+        URL mapEntrance = new URL("http://i48.photobucket.com/albums/f223/Vannesa_Loaiza/Map1_zps7ebececb.png"); //photo of the entrance of the map
+        URL bathroom1 = new URL("http://i48.photobucket.com/albums/f223/Vannesa_Loaiza/ScoobyBathroom_zps9f953fa2.png"); //photo of first bathroom
+        URL livingroomMap = new URL("http://i48.photobucket.com/albums/f223/Vannesa_Loaiza/Map2_zps3eb46b90.png"); //photo of the living room map
+       
+        JOptionPane.showMessageDialog(null, "Well here we are... The haunted house at the end of the street.", "Haunted House Adventure", JOptionPane.PLAIN_MESSAGE, new ImageIcon(hauntedHouse));
+        String playerName = JOptionPane.showInputDialog(null, "Wait! Before we get any closer, what's your name?");
+
+        String[] possibilities = {"Heck yeah! There's no such thing as ghosts.", "No... But I don't have much of a choice, right?", "*Sigh* Let's just get this over with."};
+        String intro = (String) JOptionPane.showInputDialog(
+                null,
+                "Nice to meet you "
+                + playerName + ". My name is Deborah." + '\n' + "So are you ready to go inside?",
+                "Haunted House Adventure",
+                JOptionPane.PLAIN_MESSAGE,
+                new ImageIcon(entranceDoor),
+                possibilities,
+                "Heck yeah! There's no such thing as ghosts.");
+        
+        String[] possibilities1 = {"Living room", "Dining room", "Upstairs"};
+        currentRoom = (String) JOptionPane.showInputDialog(
+                null,
+                "Ok  "
+                + playerName + ". So I managed to get a map. We are at the entrance. Where would you like to go first?",
+                "Haunted House Adventure",
+                JOptionPane.PLAIN_MESSAGE,
+                new ImageIcon(mapEntrance),
+                possibilities1,
+                "Living room.");
+       
+       
+       while(!gameOver){ //as long as gameOver is false, the loop repeats
+       if (currentRoom.equals("Living room")){ //code for the living room
+           String[] possibilities2 = {"Let's open the chest.", "Don't touch the chest. Let's just go into the Bathroom.", "Go back to front door"};
+           options = (String) JOptionPane.showInputDialog(null,"Look! There's a chest! What do you think, "
+                    + playerName + "?" + '\n' + " Should we open it, or do you think it's a trap?" + '\n' + "We could just go into the bathroom...",
+                    "Haunted House Adventure",JOptionPane.PLAIN_MESSAGE,new ImageIcon(chest),possibilities2,"Let's open the chest.");
+                    //JOptionPane drop down menu indicating where you wish to go
+           if (options.equals("Let's open the chest.")){ //if chest is opened, action happens and gameOver becomes true, ending the loop
+               JOptionPane.showMessageDialog(null, "A ghost suddenly escapes out of the chest and scares you to death!", "Game over", JOptionPane.PLAIN_MESSAGE, new ImageIcon(chestGhost));
+               gameOver=true;
+           }
+           if (options.equals("Don't touch the chest. Let's just go into the Bathroom.")){//if you go to bathroom, the currentRoom becomes "Bathroom"
+               currentRoom= "Bathroom";
+           }
+           if (options.equals("Go back to front door")){ //If you go to front door, currentRoom becomes frontDoor.
+               currentRoom="frontDoor";
+           }
+       }
+       if (currentRoom.equals("frontDoor")){ //code for frontDoor
+           
+           String[] possibilities3 = {"Living room", "Dining room", "Up the stairs", "Leave the house and run for your life!!"};
+                options = (String) JOptionPane.showInputDialog(null,"Ok  "+ playerName + ". So I managed to get a map. We are at the entrance. Where would you like to go first?",
+                "Haunted House Adventure",JOptionPane.PLAIN_MESSAGE,new ImageIcon(mapEntrance),possibilities3,"Living room.");
+                //JOptionPane drop down menu indicating where you wish to go
+            if(options.equals("Living room")){ //If you choose living room, currentRoom becomes living room
+                currentRoom= "Living room";
+            }
+            if (options.equals("Dining room")){ //If you chooce dining room, currentRoom becomes dining room
+                currentRoom = "Dining room";
+            }
+            if (options.equals("Up the stairs")){ //If you choose up the stairs, currentRoom becomes Upstairs
+                currentRoom = "Upstairs";
+            }
+            if (options.equals("Leave the house and run for your life!!")){ //If you chooce "Leave the....life!!", Actions occurs and gameOver becomes true
+                JOptionPane.showMessageDialog(null, "You escaped the house and start running for your life!", "Game Over.", JOptionPane.PLAIN_MESSAGE, new ImageIcon(hauntedHouse));
+                gameOver=true;
+            }
+           }
+        if (currentRoom.equals("Bathroom")){ //code for bathroom
+            String[] possibilities3 = {"I've seen enough movies to know what happens when you look in" +'\n' +" the creepy mirror... So i'll just check behind the shower curtain.", "Open the shower curtain so the crazy serial killer can stab me?" + '\n' + " I don't think so. Let's check out that mirror.","Head back to living room"};
+            options = (String) JOptionPane.showInputDialog(null,
+                        "Good idea. It was probably a trap anyways." + '\n' + " So would you like to investigate the mirror" + '\n' + " or look behind the shower curtain first?",
+                        "Haunted House Adventure",JOptionPane.PLAIN_MESSAGE,new ImageIcon(bathroom1),possibilities3,
+                        "I've seen enough movies to know what happens when you look in the creepy mirror... So i'll just check behind the shower curtain.");
+                        //JOptionPane drop down menu indicating where you wish to go
+            if (options.equals("I've seen enough movies to know what happens when you look in the creepy mirror... So i'll just check behind the shower curtain.")){ //If you choose "I've seen....curtain.", action occurs and gameOver becomes true, ending loop.
+                JOptionPane.showMessageDialog(null, "Room suddenly steams up and you feel fingers touching the back of your neck.", "Game Over.", JOptionPane.PLAIN_MESSAGE, new ImageIcon(hauntedHouse));
+                gameOver=true;
+            }
+            if (options.equals("Open the shower curtain so the crazy serial killer can stab me? I don't think so. Let's check out that mirror.")){ //If you choose "Open the shower....mirror", action occurs and gameOver becomes true.
+                JOptionPane.showMessageDialog(null, "See a bloody face looking back at you.", "Game Over.", JOptionPane.PLAIN_MESSAGE, new ImageIcon(hauntedHouse));
+                gameOver=true;
+            }
+            if (options.equals("Head back to living room")){ //If you chooce head back to living room, currentRoom becomes living room
+                currentRoom="Living room";
+            }
+        }
+        if(currentRoom.equals("Dining room")){ //General code for dining room
+            String[] possibilities4 = {"It's pretty dark in here. Let's light the candelabra.", "Forget the candelabra, let's go raid the kitchen!", "I'm scared, let's go back to front door"};
+            options = (String) JOptionPane.showInputDialog(null,
+                    "Woah! Look at that beautiful candelabra. Should we lit it" + '\n' + "or would you like to go straight to the kitchen?",
+                    "Haunted House Adventure",JOptionPane.PLAIN_MESSAGE,new ImageIcon(chest),possibilities4,"It's pretty dark in here. Let's light the candelabra.");
+                    //JOptionPane drop down menu indicating where you wish to go
+            if(options.equals("It's pretty dark in here. Let's light the candelabra.")){ //If you choose "It's pretty....candelabra", action occurs and gameOver becomes true
+                JOptionPane.showMessageDialog(null, "The candelabra lights up by itself and you see a death shadow.", "Game Over.", JOptionPane.PLAIN_MESSAGE, new ImageIcon(hauntedHouse));
+                gameOver=true;
+            }
+            if (options.equals("Forget the candelabra, let's go raid the kitchen!")){ //If you chooce "Forget the....kitchen", actions occurs and currentRoom becomes kitchen
+                currentRoom = "Kitchen";
+            }
+            if (options.equals("I'm scared, let's go back to front door")){ //If you chooce front door, currentRoom changes to frontDoor
+                currentRoom="frontDoor";
+            }
+        }
+        if (currentRoom.equals("Kitchen")){ //General code for kitchen
+            String[] possibilities5 = {"Fridge. Definitely the fridge first.", "Pantry. Something tells me if there's anything in the fridge it's most likely all rotten.", "I'll grab some plates from the cabinets first, you start finding something to eat.","Head back to dining room"};
+            options = (String) JOptionPane.showInputDialog(null,"Soooo i'm getting pretty hungry. I say we" + '\n' + " look for some snacks! Should we raid the fridge," + '\n' + " cabinets, or the pantry first?",
+                "Haunted House Adventure",JOptionPane.PLAIN_MESSAGE,new ImageIcon(chest),possibilities5,"Fridge. Definitely the fridge first.");
+                //JOptionPane drop down menu indicating where you wish to go
+            if (options.equals("Fridge. Definitely the fridge first.")){ //If you choose fridge, actions occurs and gameOver becomes true, ending loop
+                JOptionPane.showMessageDialog(null, "You open the fridge and find some delicious soul food.", "Game Over.", JOptionPane.PLAIN_MESSAGE, new ImageIcon(hauntedHouse));
+                gameOver = true;
+            }
+            if (options.equals("Pantry. Something tells me if there's anything in the fridge it's most likely all rotten.")){ //If you chooce pantry, currentRoom becomes pantry
+                currentRoom = "Pantry";
+            }
+            if (options.equals("I'll grab some plates from the cabinets first, you start finding something to eat.")){ //If you open cabinet, action occurs and gameOver bcomes true, ending loop
+                JOptionPane.showMessageDialog(null, "You open the cabinet and dishes start flying out." + '\n' + "You get hit in the head and slowly start drifting towards the light..", "Game Over.", JOptionPane.PLAIN_MESSAGE, new ImageIcon(hauntedHouse));
+                gameOver = true;
+            }
+            if (options.equals("Head back to dining room")){ //If you choose dining room, currentRoom becomes dining room
+                currentRoom="Dining room";
+            }
+        }
+        if (currentRoom.equals("Pantry")){ //general code for pantry
+            String[] possibilities6 = {"Let's take a look at that recipe box.", "Let's take the broom, we could use it as a weapon.","Head back to kitchen"};
+            options = (String) JOptionPane.showInputDialog(null,
+                    "Okay so we have what appears to be an old recipe box and a broom. Which shal we investiage first?","Haunted House Adventure",
+                    JOptionPane.PLAIN_MESSAGE,new ImageIcon(chest),possibilities6,"Let's take a look at that recipe box.");
+                    //JOptionPane drop down menu indicating where you wish to go
+            if (options.equals("Let's take a look at that recipe box.")){ //If you choose recipe box, action occurs and gameOver becomes true, ending loop
+                JOptionPane.showMessageDialog(null, "You open it up and a recipe for chocolate" + '\n' + " devils food cake appears our of no where.", "Game Over.", JOptionPane.PLAIN_MESSAGE, new ImageIcon(hauntedHouse));
+                gameOver=true;
+            }
+            if(options.equals("Let's take the broom, we could use it as a weapon.")){ //If you pick up broom, action occurs and gameOver becomes true, loop ends
+                JOptionPane.showMessageDialog(null, "Flies up in the air as soon as you touch it.", "Game Over.", JOptionPane.PLAIN_MESSAGE, new ImageIcon(hauntedHouse));
+                gameOver=true;
+            }
+            if (options.equals("Head back to kitchen")){ //If you choose kitchen, currentRoom becomes kitchen
+                currentRoom = "Kitchen";
+            }
+        }
+        if(currentRoom.equals("Upstairs")){ //general code for upstairs
+            String[] possibilities7 = {"Master bedroom", "Bedroom 1", "Bedroom 2", "Head back to front door"};
+            options = (String) JOptionPane.showInputDialog(null,"Alrighty then gang. Which room shall we explore first?",
+                    "Haunted House Adventure",JOptionPane.PLAIN_MESSAGE,new ImageIcon(chest),possibilities7,"Master bedroom");
+                    //JOptionPane drop down menu indicating where you wish to go
+            if(options.equals("Master bedroom")){ //If you choose master bedroom, currentRoom becomes master bedroom
+                currentRoom="Master bedroom";
+            }
+            if(options.equals("Bedroom 1")){ //If you choose Bedroom 1, currentRoom becomes Bedroom 1
+                currentRoom="Bedroom 1";
+            }
+            if(options.equals("Bedroom 2")){ //If you choose Bedroom 2, currentRoom becomes Bedroom 2
+                currentRoom="Bedroom 2";
+            }
+            if (options.equals("Head back to front door")){ //If you choose to head back to front door, currentRoom becomes frontDoor
+                currentRoom="frontDoor";
+            }
+        }
+        if(currentRoom.equals("Bedroom 1")){ //General code for Bedroom 1
+            String[] possibilities10 = {"Clearly there isn't anything crazy in here, let's just move on to the restroom.", "You go check out the rest of the house. I'm just gonna take a quick breather on this rocking chair.", "I think I heard something outside. I'm going to check the window real quick.", "Lets go back to beginning of upstairs."};
+            options = (String) JOptionPane.showInputDialog(null,"Ok so should we explore the room or go into the bathroom?",
+                            "Haunted House Adventure",JOptionPane.PLAIN_MESSAGE,new ImageIcon(chest),possibilities10,
+                            "Clearly there isn't anything crazy in here, let's just move on to the restroom.");
+                            //JOptionPane drop down menu indicating where you wish to go
+            if(options.equals("Lets go back to beginning of upstairs.")){ //If you choose to head back to the beginning of the upstairs, currentRoom will change to Upstairs
+                 currentRoom="Upstairs";
+            }
+            if (options.equals("Clearly there isn't anything crazy in here, let's just move on to the restroom.")){ //If you choose to go to restroom, currentRoom becomes Bathroom 2
+                currentRoom="Bathroom2";
+            }
+            if (options.equals("You go check out the rest of the house. I'm just gonna take a quick breather on this rocking chair.")){ // If you choose to check the rocking chair, action occurs and gameOver changes to true, thus ending the loop
+                JOptionPane.showMessageDialog(null, "You approach the chair but then it starts rocking by itself with no one in it.", "Game Over.", JOptionPane.PLAIN_MESSAGE, new ImageIcon(hauntedHouse));
+                gameOver=true;
+            }
+            if (options.equals("I think I heard something outside. I'm going to check the window real quick.")){ //If you check the window, action occurs and gameOver becomes true, thus ending the loop
+                JOptionPane.showMessageDialog(null, "Chair starts rocking by itself with no one in it.", "Game Over.", JOptionPane.PLAIN_MESSAGE, new ImageIcon(hauntedHouse));
+                gameOver=true;
+            }
+        }
+        if (currentRoom.equals("Bathroom2")){ //General code for Bathroom2
+            String[] possibilities11 = {"This mirror looks suspicious....", "We should check behind the shower curtain before we do anything else.","Head back to bedroom 1", "Head to bedroom 2"};
+            options = (String) JOptionPane.showInputDialog(null,"Ok so let's look around. Let me know if you see anything suspicious.",
+                                "Haunted House Adventure",JOptionPane.PLAIN_MESSAGE,new ImageIcon(chest),
+                                possibilities11,"Clearly there isn't anything crazy in here, let's just move on to the restroom.");
+                                //JOptionPane drop down menu indicating where you wish to go
+            if(options.equals("This mirror looks suspicious....")){ //If you look at the mirror, action occurs, gameOver becomes true and ends the loop
+               JOptionPane.showMessageDialog(null, "A bloody face suddenly appears looking back at you", "Game Over.", JOptionPane.PLAIN_MESSAGE, new ImageIcon(hauntedHouse));
+               gameOver=true;
+           } 
+           if (options.equals("We should check behind the shower curtain before we do anything else.")){ //If you check behind the curtain, action occurs and gameOver becomes true, ending the loop
+               JOptionPane.showMessageDialog(null, "The room suddenly steams up and you feel fingers touching the back of your neck", "Game Over.", JOptionPane.PLAIN_MESSAGE, new ImageIcon(hauntedHouse));
+               gameOver=true;
+           }
+           if (options.equals("Head back to bedroom 1")){ //If you head back to bedroom 1, then currentRoom becomes bedroom 1
+               currentRoom="Bedroom 1";
+           }
+           if (options.equals("Head to bedroom 2")){ //If you head back to bedroom 2, then currentRoom becomes Bedroom 2
+               currentRoom="Bedroom 2";
+           }
+           }
+        if (currentRoom.equals("Bedroom 2")){ //General code for Bedroom 2
+            String[] possibilities12 = {"Clearly there isn't anything crazy in here, let's just move on to the restroom.", "Aww look at the adorable Doll House.", "Let's check to see what the wardrobe looks like.", "Let's head back to the beginning of upstairs"};
+                        options = (String) JOptionPane.showInputDialog(null,"Ok so should we explore the room or go into the bathroom?",
+                                "Haunted House Adventure",JOptionPane.PLAIN_MESSAGE,new ImageIcon(chest),possibilities12,
+                                "Clearly there isn't anything crazy in here, let's just move on to the restroom.");
+                        //JOptionPane drop down menu indicating where you wish to go
+            if(options.equals("Clearly there isn't anything crazy in here, let's just move on to the restroom.")){ //If you go to the restroom, currentRoom becomes Bathroom 2
+                currentRoom="Bathroom2";
+            }
+            if (options.equals("Aww look at the adorable Doll House.")){ //If you open the doll house, action occurs and gameOver becomes true, thus ending the loop
+                JOptionPane.showMessageDialog(null, "The dolls start dancing on their own.", "Game Over.", JOptionPane.PLAIN_MESSAGE, new ImageIcon(hauntedHouse));
+                gameOver=true;
+            }
+            if (options.equals("Let's check to see what the wardrobe looks like.")){ //If you choose to open wardrobe, action occurs and gameOver becomes true, ending the loop
+                JOptionPane.showMessageDialog(null, "A ghost flies out of the dresser as soon as you open it and goes right though your body.", "Game Over.", JOptionPane.PLAIN_MESSAGE, new ImageIcon(hauntedHouse));
+                gameOver=true;
+            }
+            if (options.equals("Let's head back to the beginning of upstairs")){ //If you decide to go back to beginning of upstairs, currentRoom becomes Upstairs
+                currentRoom="Upstairs";
+            }
+        }
+        if (currentRoom.equals("Master bedroom")){ //General code for Master bedroom
+            String[] possibilities8 = {"Heck yeah we should go through that jewelry box! There might be something worth something in there we can put up on craigslist.", "I actually need to use the restroom so i'm going into the bathroom.", "Let's head back to beginning of upstairs"};
+                options = (String) JOptionPane.showInputDialog(null,"Ok it looks like there's a bathroom that way... But look at that beautiful Jewelry box! Can I open it?",
+                        "Haunted House Adventure",JOptionPane.PLAIN_MESSAGE,new ImageIcon(chest),possibilities8,
+                        "Heck yeah we should go through that jewelry box! There might be something in there we can put up on craigslist.");
+                    //JOptionPane drop down menu indicating where you wish to go
+            if (options.equals("Heck yeah we should go through that jewelry box! There might be something worth something in there we can put up on craigslist.")){ //If you open jewelry box, action occurs, gameOver changes to true and ends the loop
+                JOptionPane.showMessageDialog(null, "You find the cursed Hope Diamond and feel your doom.", "Game Over.", JOptionPane.PLAIN_MESSAGE, new ImageIcon(hauntedHouse));
+                gameOver=true;
+            }
+            if (options.equals("Let's head back to beginning of upstairs")){ //If you decide to go back to beginning of upstairs, currentRoom changes to Upstairs
+                currentRoom = "Upstairs";
+            }
+            if (options.equals("I actually need to use the restroom so i'm going into the bathroom.")){ //If you choose to go to master bathroom, currentRoom becomes Master Bathroom
+                currentRoom="Master bathroom";
+            }
+        }
+        if (currentRoom.equals("Master bathroom")){ //General code for Master Bathroom
+            String[] possibilities9 = {"Let's light the Oil lampt to improve our visibility.", "I think you're right... Let's check the shower before we do anything.", "Let's head back to the master bedroom.."};
+                    options = (String) JOptionPane.showInputDialog(null,"Look at that Oil Lamp! Want me to lit it up? Or wait... Is there someone behind the shower?",
+                            "Haunted House Adventure",JOptionPane.PLAIN_MESSAGE,new ImageIcon(chest),possibilities9,
+                            "Let's light the Oil lampt to improve our visibility.");
+                    //JOptionPane drop down menu indicating where you wish to go
+            if (options.equals("Let's light the Oil lampt to improve our visibility.")){ //If you choose to light the oil lamp, action occurs and gameOver becomes true, thus ending the loop
+                JOptionPane.showMessageDialog(null, "Rub the lamp and a genie pops out who says he’ll grant you 3 wishes... But then lies and kills you.", "Game Over.", JOptionPane.PLAIN_MESSAGE, new ImageIcon(hauntedHouse));
+                gameOver=true;
+            }
+            if (options.equals("I think you're right... Let's check the shower before we do anything.")){ //If you check the shower, action occurs and makes gameOver become true, thus ending the loop
+                JOptionPane.showMessageDialog(null, "Suddenly hear singing in the shower, but no one is there.", "Game Over.", JOptionPane.PLAIN_MESSAGE, new ImageIcon(hauntedHouse));
+                gameOver=true;
+            }
+            if (options.equals("Let's head back to the master bedroom..")){ //If you choose to head back to master bedroom, the currentRoom becomes Master bedroom
+                currentRoom="Master bedroom";
+            }
+        }
+     }
+    
+  }
+}
