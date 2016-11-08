@@ -1,0 +1,981 @@
+//Property of
+//Enrique F. Espinet
+//Card shuffle with 4 players!
+
+package card.shuffle;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Iterator;
+import java.util.List;
+
+/**
+ * @Enrique F. Espinet
+ */
+public class CardShuffle {
+
+    /**
+     * @param args the command line arguments
+     */
+    public static void main(String[] args) {
+        
+        int randomNum = (int)(Math.random()*4 + 1);//creates a random number generator used to decide who will win-whether its the
+                                                   //dealer or the other players
+        randomNum = randomNum;//just to be able to test out the else statement(delete afterwards)
+        if((randomNum >=1) && (randomNum<=3))//this statement is if ranNum is 1,2 or 3. Meaning that the dealer will win.
+        {
+            
+            String pCards[] = {"King of Spades","Ace of Diamonds","Jack of Spades","Queen of Diamonds","Nine of Spades","Nine of Hearts",
+                                    "Nine of Diamonds","Six of Spades","Eight of Clubs","Ten of Clubs","Ten of Diamonds","Ten of Spades","Queen of Clubs"};
+            //The array pCards is the dealer deck, it has been created in a way that allows the dealer to win every single time
+            
+            List<String> cards = new ArrayList<String>();//creates a list that will store all the remaining cards
+            String cardsInArray[] = {"Four of Hearts","Ten of Hearts","Five of Spades",  
+                          "Seven of Diamonds","Deuce of Diamonds","Six of Diamonds","Deuce of Spades",  
+                          "Three of Clubs","Nine of Clubs","Seven of Clubs","Six of Clubs","Deuce of Clubs",   
+                          "Three of Spades","Three of Hearts","Ace of Hearts",
+                          "Seven of Hearts","Four of Diamonds","Three of Diamonds","King of Hearts",
+                          "Five of Clubs","Five of Hearts","Deuce of Hearts",  
+                          "Queen of Spades","King of Diamonds", 
+                          "Eight of Diamonds","Four of Spades","Eight of Hearts",  
+                          "Ace of Spades","Six of Hearts","Seven of Spades",  
+                          "Jack of Clubs","Four of Clubs","Eight of Spades",  
+                          "Five of Diamonds","Queen of Hearts","King of Clubs",
+                          "Jack of Diamonds","Jack of Hearts","Ace of Clubs"};  
+            //The unshuffled deck of cards
+            
+            for(int a = 0; a <cardsInArray.length;a++)
+            {
+                //for convenience, we are going to place all the cards into a list
+                cards.add(cardsInArray[a]);
+            }
+            System.out.println(cards);
+            Collections.shuffle(cards);//Shuffles the list of cards
+            System.out.println(cards);
+            //creates 3 arrays, one for each of the remaining players, this will store their cards
+            String qCards[] = new String[13];
+            String rCards[] = new String[13];
+            String sCards[] = new String[13];
+            
+            int qCounter = 0;//a counter indicating how many cards he has
+            int qIndex = 0;//the index for placing the card into its array
+            for(Iterator<String> iterator2 = cards.iterator();iterator2.hasNext();)
+            {//a iterator that will go through each item in a list in consecutive order until it runs out of items
+                if(qCounter >12)
+                {
+                    //once the array has 13 cards, it will break out of the iterator for loop
+                    break;
+                }
+                else
+                {
+                    String stringQ = iterator2.next();//gets the item from the list and places it into a string
+                    qCards[qIndex] = stringQ;//we store the string into its array using the current index position
+                    iterator2.remove();//we remove the item we put into the array in order to prevent multiple cards to be distributed
+                    qIndex+=1;//we increment the index
+                    qCounter+=1;//we increment the card counter
+                }
+            }
+            int rCounter = 0;//a counter indicating how many cards he has
+            int rIndex = 0;//the index for placing the card into its array
+            for(Iterator<String> iterator3 = cards.iterator();iterator3.hasNext();)
+            {//a iterator that will go through each item in a list in consecutive order until it runs out of items
+                if(rCounter > 12)
+                {
+                    //once the array has 13 cards, it will break out of the iterator for loop
+                    break;
+                }
+                else
+                {
+                    String stringR = iterator3.next();//gets the item from the list and places it into a string
+                    rCards[rIndex] = stringR;//we store the string into its array using the current index position
+                    iterator3.remove();//we remove the item we put into the array in order to prevent multiple cards to be distributed
+                    rIndex+=1;//we increment the index
+                    rCounter+=1;//we increment the card counter
+                }
+            }
+            //same comments as the other section...
+            int sCounter = 0;
+            int sIndex = 0;
+            for(Iterator<String> iterator4 = cards.iterator();iterator4.hasNext();)
+            {
+                if(sCounter > 12)
+                {
+                    break;
+                }
+                else
+                {
+                    String stringS = iterator4.next();
+                    sCards[sIndex] = stringS;
+                    iterator4.remove();
+                    sIndex+=1;
+                    sCounter+=1;
+                }
+            }
+            /*
+            we create 4 temp strings that will hold a value for later on..
+            */
+            String tempPhraseP;
+            String tempPhraseQ;
+            String tempPhraseR;
+            String tempPhraseS;
+
+            /*
+            we create int totals for each person, this will store the total value of their cards
+            */
+            int pTotal = 0;
+            int qTotal = 0;
+            int rTotal = 0;
+            int sTotal = 0;
+            
+            for(int a = 0; a<pCards.length;a++)
+            {//for each card in the array...
+                tempPhraseP = pCards[a];//we get the value for the current index and put it into the temp string
+                String[] tempP = tempPhraseP.split(" ");
+                //we split up the temp string by "Spaces" and store it into a different array
+                int tempCounterP = 0;//a counter used for later..
+                for(int b = 0; b < 2; b++)
+                {//an inner loop that will grab each card and decypher its value
+                    String P = tempP[tempCounterP];
+                    //we get the current face or suit of each card and find outs its value..
+                    if(P.equals("Ace"))
+                    {
+                        pTotal+=13;
+                    }
+                    else if(P.equals("King"))
+                    {
+                        pTotal+=12;
+                    }
+                    else if(P.equals("Queen"))
+                    {
+                        pTotal+=11;
+                    }
+                    else if(P.equals("Jack"))
+                    {
+                        pTotal+=10;
+                    }
+                    else if(P.equals("Ten"))
+                    {
+                        pTotal+=9;
+                    }
+                    else if(P.equals("Nine"))
+                    {
+                        pTotal+=8;
+                    }
+                    else if(P.equals("Eight"))
+                    {
+                        pTotal+=7;
+                    }
+                    else if(P.equals("Seven"))
+                    {
+                        pTotal+=6;
+                    }
+                    else if(P.equals("Six"))
+                    {
+                        pTotal+=5;
+                    }
+                    else if(P.equals("Five"))
+                    {
+                        pTotal+=4;
+                    }
+                    else if(P.equals("Four"))
+                    {
+                        pTotal+=3;
+                    }
+                    else if(P.equals("Three"))
+                    {
+                        pTotal+=2;
+                    }
+                    else if(P.equals("Deuce"))
+                    {
+                        pTotal+=1;
+                    }
+                    else if(P.equals("Spades"))
+                    {
+                        pTotal+=4;
+                    }
+                    else if(P.equals("Hearts"))
+                    {
+                        pTotal+=3;
+                    }
+                    else if(P.equals("Diamonds"))
+                    {
+                        pTotal+=2;
+                    }
+                    else if(P.equals("Clubs"))
+                    {
+                        pTotal+=1;
+                    }
+                    else
+                    {
+                        
+                    }
+                    //we calculate the total each time..
+                    //we increment tempCounter by 2 in order to skip the "of" in each card..
+                    //For example: Queen "of" Hearts, we only care about Queen and Hearts..
+                    tempCounterP +=2;
+                }
+            }
+            System.out.println(pTotal);//we print out its total
+            
+            //same thing as above..
+            for(int a = 0; a<qCards.length;a++)
+            {
+                tempPhraseQ = qCards[a];
+                String[] tempQ = tempPhraseQ.split(" ");
+               
+                int tempCounterQ = 0;
+                for(int b = 0; b < 2; b++)
+                {
+                    String Q = tempQ[tempCounterQ];
+                    if(Q.equals("Ace"))
+                    {
+                        qTotal+=13;
+                    }
+                    else if(Q.equals("King"))
+                    {
+                        qTotal+=12;
+                    }
+                    else if(Q.equals("Queen"))
+                    {
+                        qTotal+=11;
+                    }
+                    else if(Q.equals("Jack"))
+                    {
+                        qTotal+=10;
+                    }
+                    else if(Q.equals("Ten"))
+                    {
+                        qTotal+=9;
+                    }
+                    else if(Q.equals("Nine"))
+                    {
+                        qTotal+=8;
+                    }
+                    else if(Q.equals("Eight"))
+                    {
+                        qTotal+=7;
+                    }
+                    else if(Q.equals("Seven"))
+                    {
+                        qTotal+=6;
+                    }
+                    else if(Q.equals("Six"))
+                    {
+                        qTotal+=5;
+                    }
+                    else if(Q.equals("Five"))
+                    {
+                        qTotal+=4;
+                    }
+                    else if(Q.equals("Four"))
+                    {
+                        qTotal+=3;
+                    }
+                    else if(Q.equals("Three"))
+                    {
+                        qTotal+=2;
+                    }
+                    else if(Q.equals("Deuce"))
+                    {
+                        qTotal+=1;
+                    }
+                    else if(Q.equals("Spades"))
+                    {
+                        qTotal+=4;
+                    }
+                    else if(Q.equals("Hearts"))
+                    {
+                        qTotal+=3;
+                    }
+                    else if(Q.equals("Diamonds"))
+                    {
+                        qTotal+=2;
+                    }
+                    else if(Q.equals("Clubs"))
+                    {
+                        qTotal+=1;
+                    }
+                    else
+                    {
+                        
+                    }
+                    tempCounterQ +=2;
+                }
+            }
+            System.out.println(qTotal);
+            
+            //same thing as above..
+            for(int a = 0; a<rCards.length;a++)
+            {
+                tempPhraseR = rCards[a];
+                String[] tempR = tempPhraseR.split(" ");
+               
+                int tempCounterR = 0;
+                for(int b = 0; b < 2; b++)
+                {
+                    String R = tempR[tempCounterR];
+                    if(R.equals("Ace"))
+                    {
+                        rTotal+=13;
+                    }
+                    else if(R.equals("King"))
+                    {
+                        rTotal+=12;
+                    }
+                    else if(R.equals("Queen"))
+                    {
+                        rTotal+=11;
+                    }
+                    else if(R.equals("Jack"))
+                    {
+                        rTotal+=10;
+                    }
+                    else if(R.equals("Ten"))
+                    {
+                        rTotal+=9;
+                    }
+                    else if(R.equals("Nine"))
+                    {
+                        rTotal+=8;
+                    }
+                    else if(R.equals("Eight"))
+                    {
+                        rTotal+=7;
+                    }
+                    else if(R.equals("Seven"))
+                    {
+                        rTotal+=6;
+                    }
+                    else if(R.equals("Six"))
+                    {
+                        rTotal+=5;
+                    }
+                    else if(R.equals("Five"))
+                    {
+                        rTotal+=4;
+                    }
+                    else if(R.equals("Four"))
+                    {
+                        rTotal+=3;
+                    }
+                    else if(R.equals("Three"))
+                    {
+                        rTotal+=2;
+                    }
+                    else if(R.equals("Deuce"))
+                    {
+                        rTotal+=1;
+                    }
+                    else if(R.equals("Spades"))
+                    {
+                        rTotal+=4;
+                    }
+                    else if(R.equals("Hearts"))
+                    {
+                        rTotal+=3;
+                    }
+                    else if(R.equals("Diamonds"))
+                    {
+                        rTotal+=2;
+                    }
+                    else if(R.equals("Clubs"))
+                    {
+                        rTotal+=1;
+                    }
+                    else
+                    {
+                        
+                    }
+                    tempCounterR +=2;
+                }
+            }
+            System.out.println(rTotal);
+            
+            //same thing as above..
+            for(int a = 0; a<sCards.length;a++)
+            {
+                tempPhraseS = sCards[a];
+                String[] tempS = tempPhraseS.split(" ");
+               
+                int tempCounterS = 0;
+                for(int b = 0; b < 2; b++)
+                {
+                    String S = tempS[tempCounterS];
+                    if(S.equals("Ace"))
+                    {
+                        sTotal+=13;
+                    }
+                    else if(S.equals("King"))
+                    {
+                        sTotal+=12;
+                    }
+                    else if(S.equals("Queen"))
+                    {
+                        sTotal+=11;
+                    }
+                    else if(S.equals("Jack"))
+                    {
+                        sTotal+=10;
+                    }
+                    else if(S.equals("Ten"))
+                    {
+                        sTotal+=9;
+                    }
+                    else if(S.equals("Nine"))
+                    {
+                        sTotal+=8;
+                    }
+                    else if(S.equals("Eight"))
+                    {
+                        sTotal+=7;
+                    }
+                    else if(S.equals("Seven"))
+                    {
+                        sTotal+=6;
+                    }
+                    else if(S.equals("Six"))
+                    {
+                        sTotal+=5;
+                    }
+                    else if(S.equals("Five"))
+                    {
+                        sTotal+=4;
+                    }
+                    else if(S.equals("Four"))
+                    {
+                        sTotal+=3;
+                    }
+                    else if(S.equals("Three"))
+                    {
+                        sTotal+=2;
+                    }
+                    else if(S.equals("Deuce"))
+                    {
+                        sTotal+=1;
+                    }
+                    else if(S.equals("Spades"))
+                    {
+                        sTotal+=4;
+                    }
+                    else if(S.equals("Hearts"))
+                    {
+                        sTotal+=3;
+                    }
+                    else if(S.equals("Diamonds"))
+                    {
+                        sTotal+=2;
+                    }
+                    else if(S.equals("Clubs"))
+                    {
+                        sTotal+=1;
+                    }
+                    else
+                    {
+                        
+                    }
+                    tempCounterS +=2;
+                }
+            }
+            System.out.println(sTotal);
+            
+            //now we determine who wins and whether or not its a tie..
+            if((pTotal>qTotal)&&(pTotal>rTotal)&&(pTotal>sTotal))
+            {
+                System.out.println("Congrats! Dealer wins with " + pTotal + " points!!");
+            }
+            else if((qTotal>pTotal)&&(qTotal>rTotal)&&(qTotal>sTotal))
+            {
+                System.out.println("Congrats! Q hand wins with " + qTotal + " points!!");
+            }
+            else if((rTotal>pTotal)&&(rTotal>qTotal)&&(rTotal>sTotal))
+            {
+                System.out.println("Congrats! R hand wins with " + rTotal + " points!!");
+            }
+            else if((sTotal>pTotal)&&(sTotal>qTotal)&&(sTotal>rTotal))
+            {
+                System.out.println("Congrats! S hand wins with " + sTotal + " points!!");
+            }
+            else
+            {
+                System.out.println("Thers has been a tie! No winners!!");
+            }
+            
+        }
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        /*
+        here starts the else statement, the statement that any of the players can win..
+        */
+        else
+        {
+            //the same thing as the if statement, just that the dealer does not start with his own deck
+            List<String> cards = new ArrayList<String>();
+            String cardsInArray[] = {"Four of Hearts","Ten of Hearts","Nine of Spades","Five of Spades",  
+                          "Seven of Diamonds","Deuce of Diamonds","Six of Diamonds","Deuce of Spades",  
+                          "Three of Clubs","Ace of Diamonds","Jack of Spades","Ten of Diamonds",
+                          "Nine of Clubs","Seven of Clubs","Six of Clubs","Deuce of Clubs",   
+                          "Three of Spades","Three of Hearts","Ace of Hearts","King of Spades",  
+                          "Seven of Hearts","Four of Diamonds","Three of Diamonds","King of Hearts",  
+                          "Ten of Clubs","Five of Clubs","Five of Hearts","Deuce of Hearts",  
+                          "Eight of Clubs","Queen of Spades","King of Diamonds","Nine of Hearts",  
+                          "Queen of Diamonds","Eight of Diamonds","Four of Spades","Eight of Hearts",  
+                          "Ace of Spades","Six of Hearts","Queen of Clubs","Seven of Spades",  
+                          "Jack of Clubs","Four of Clubs","Six of Spades","Eight of Spades",  
+                          "Five of Diamonds","Queen of Hearts","King of Clubs","Nine of Diamonds",
+                          "Jack of Diamonds","Jack of Hearts","Ten of Spades","Ace of Clubs"};  
+            
+            for(int a = 0; a <cardsInArray.length;a++)
+            {
+                cards.add(cardsInArray[a]);
+            }
+            System.out.println(cards);
+            Collections.shuffle(cards);
+            System.out.println(cards);
+            
+            String pCards[] = new String[13];
+            String qCards[] = new String[13];
+            String rCards[] = new String[13];
+            String sCards[] = new String[13];
+            ///////////////////
+            int pCounter = 0;
+            int pIndex = 0;
+            for (Iterator<String> iterator = cards.iterator(); iterator.hasNext();) 
+            {
+                if(pCounter >12)
+                {
+                    break;
+                }
+                else
+                {
+                      String stringP = iterator.next();
+                      pCards[pIndex] = stringP;
+                      iterator.remove();
+                      pIndex +=1;
+                      pCounter+=1;
+                }
+            }
+            int qCounter = 0;
+            int qIndex = 0;
+            for(Iterator<String> iterator2 = cards.iterator();iterator2.hasNext();)
+            {
+                if(qCounter >12)
+                {
+                    break;
+                }
+                else
+                {
+                    String stringQ = iterator2.next();
+                    qCards[qIndex] = stringQ;
+                    iterator2.remove();
+                    qIndex+=1;
+                    qCounter+=1;
+                }
+            }
+            int rCounter = 0;
+            int rIndex = 0;
+            for(Iterator<String> iterator3 = cards.iterator();iterator3.hasNext();)
+            {
+                if(rCounter > 12)
+                {
+                    break;
+                }
+                else
+                {
+                    String stringR = iterator3.next();
+                    rCards[rIndex] = stringR;
+                    iterator3.remove();
+                    rIndex+=1;
+                    rCounter+=1;
+                }
+            }
+            int sCounter = 0;
+            int sIndex = 0;
+            for(Iterator<String> iterator4 = cards.iterator();iterator4.hasNext();)
+            {
+                if(sCounter > 12)
+                {
+                    break;
+                }
+                else
+                {
+                    String stringS = iterator4.next();
+                    sCards[sIndex] = stringS;
+                    iterator4.remove();
+                    sIndex+=1;
+                    sCounter+=1;
+                }
+            }
+            String tempPhraseP;
+            String tempPhraseQ;
+            String tempPhraseR;
+            String tempPhraseS;
+            
+            int pTotal = 0;
+            int qTotal = 0;
+            int rTotal = 0;
+            int sTotal = 0;
+            
+            for(int a = 0; a<pCards.length;a++)
+            {
+                tempPhraseP = pCards[a];
+                String[] tempP = tempPhraseP.split(" ");
+               
+                int tempCounterP = 0;
+                for(int b = 0; b < 2; b++)
+                {
+                    String P = tempP[tempCounterP];
+                    if(P.equals("Ace"))
+                    {
+                        pTotal+=13;
+                    }
+                    else if(P.equals("King"))
+                    {
+                        pTotal+=12;
+                    }
+                    else if(P.equals("Queen"))
+                    {
+                        pTotal+=11;
+                    }
+                    else if(P.equals("Jack"))
+                    {
+                        pTotal+=10;
+                    }
+                    else if(P.equals("Ten"))
+                    {
+                        pTotal+=9;
+                    }
+                    else if(P.equals("Nine"))
+                    {
+                        pTotal+=8;
+                    }
+                    else if(P.equals("Eight"))
+                    {
+                        pTotal+=7;
+                    }
+                    else if(P.equals("Seven"))
+                    {
+                        pTotal+=6;
+                    }
+                    else if(P.equals("Six"))
+                    {
+                        pTotal+=5;
+                    }
+                    else if(P.equals("Five"))
+                    {
+                        pTotal+=4;
+                    }
+                    else if(P.equals("Four"))
+                    {
+                        pTotal+=3;
+                    }
+                    else if(P.equals("Three"))
+                    {
+                        pTotal+=2;
+                    }
+                    else if(P.equals("Deuce"))
+                    {
+                        pTotal+=1;
+                    }
+                    else if(P.equals("Spades"))
+                    {
+                        pTotal+=4;
+                    }
+                    else if(P.equals("Hearts"))
+                    {
+                        pTotal+=3;
+                    }
+                    else if(P.equals("Diamonds"))
+                    {
+                        pTotal+=2;
+                    }
+                    else if(P.equals("Clubs"))
+                    {
+                        pTotal+=1;
+                    }
+                    else
+                    {
+                        
+                    }
+                    tempCounterP +=2;
+                }
+            }
+            System.out.println(pTotal);
+            for(int a = 0; a<qCards.length;a++)
+            {
+                tempPhraseQ = qCards[a];
+                String[] tempQ = tempPhraseQ.split(" ");
+               
+                int tempCounterQ = 0;
+                for(int b = 0; b < 2; b++)
+                {
+                    String Q = tempQ[tempCounterQ];
+                    if(Q.equals("Ace"))
+                    {
+                        qTotal+=13;
+                    }
+                    else if(Q.equals("King"))
+                    {
+                        qTotal+=12;
+                    }
+                    else if(Q.equals("Queen"))
+                    {
+                        qTotal+=11;
+                    }
+                    else if(Q.equals("Jack"))
+                    {
+                        qTotal+=10;
+                    }
+                    else if(Q.equals("Ten"))
+                    {
+                        qTotal+=9;
+                    }
+                    else if(Q.equals("Nine"))
+                    {
+                        qTotal+=8;
+                    }
+                    else if(Q.equals("Eight"))
+                    {
+                        qTotal+=7;
+                    }
+                    else if(Q.equals("Seven"))
+                    {
+                        qTotal+=6;
+                    }
+                    else if(Q.equals("Six"))
+                    {
+                        qTotal+=5;
+                    }
+                    else if(Q.equals("Five"))
+                    {
+                        qTotal+=4;
+                    }
+                    else if(Q.equals("Four"))
+                    {
+                        qTotal+=3;
+                    }
+                    else if(Q.equals("Three"))
+                    {
+                        qTotal+=2;
+                    }
+                    else if(Q.equals("Deuce"))
+                    {
+                        qTotal+=1;
+                    }
+                    else if(Q.equals("Spades"))
+                    {
+                        qTotal+=4;
+                    }
+                    else if(Q.equals("Hearts"))
+                    {
+                        qTotal+=3;
+                    }
+                    else if(Q.equals("Diamonds"))
+                    {
+                        qTotal+=2;
+                    }
+                    else if(Q.equals("Clubs"))
+                    {
+                        qTotal+=1;
+                    }
+                    else
+                    {
+                        
+                    }
+                    tempCounterQ +=2;
+                }
+            }
+            System.out.println(qTotal);
+            for(int a = 0; a<rCards.length;a++)
+            {
+                tempPhraseR = rCards[a];
+                String[] tempR = tempPhraseR.split(" ");
+               
+                int tempCounterR = 0;
+                for(int b = 0; b < 2; b++)
+                {
+                    String R = tempR[tempCounterR];
+                    if(R.equals("Ace"))
+                    {
+                        rTotal+=13;
+                    }
+                    else if(R.equals("King"))
+                    {
+                        rTotal+=12;
+                    }
+                    else if(R.equals("Queen"))
+                    {
+                        rTotal+=11;
+                    }
+                    else if(R.equals("Jack"))
+                    {
+                        rTotal+=10;
+                    }
+                    else if(R.equals("Ten"))
+                    {
+                        rTotal+=9;
+                    }
+                    else if(R.equals("Nine"))
+                    {
+                        rTotal+=8;
+                    }
+                    else if(R.equals("Eight"))
+                    {
+                        rTotal+=7;
+                    }
+                    else if(R.equals("Seven"))
+                    {
+                        rTotal+=6;
+                    }
+                    else if(R.equals("Six"))
+                    {
+                        rTotal+=5;
+                    }
+                    else if(R.equals("Five"))
+                    {
+                        rTotal+=4;
+                    }
+                    else if(R.equals("Four"))
+                    {
+                        rTotal+=3;
+                    }
+                    else if(R.equals("Three"))
+                    {
+                        rTotal+=2;
+                    }
+                    else if(R.equals("Deuce"))
+                    {
+                        rTotal+=1;
+                    }
+                    else if(R.equals("Spades"))
+                    {
+                        rTotal+=4;
+                    }
+                    else if(R.equals("Hearts"))
+                    {
+                        rTotal+=3;
+                    }
+                    else if(R.equals("Diamonds"))
+                    {
+                        rTotal+=2;
+                    }
+                    else if(R.equals("Clubs"))
+                    {
+                        rTotal+=1;
+                    }
+                    else
+                    {
+                        
+                    }
+                    tempCounterR +=2;
+                }
+            }
+            System.out.println(rTotal);
+            for(int a = 0; a<sCards.length;a++)
+            {
+                tempPhraseS = sCards[a];
+                String[] tempS = tempPhraseS.split(" ");
+               
+                int tempCounterS = 0;
+                for(int b = 0; b < 2; b++)
+                {
+                    String S = tempS[tempCounterS];
+                    if(S.equals("Ace"))
+                    {
+                        sTotal+=13;
+                    }
+                    else if(S.equals("King"))
+                    {
+                        sTotal+=12;
+                    }
+                    else if(S.equals("Queen"))
+                    {
+                        sTotal+=11;
+                    }
+                    else if(S.equals("Jack"))
+                    {
+                        sTotal+=10;
+                    }
+                    else if(S.equals("Ten"))
+                    {
+                        sTotal+=9;
+                    }
+                    else if(S.equals("Nine"))
+                    {
+                        sTotal+=8;
+                    }
+                    else if(S.equals("Eight"))
+                    {
+                        sTotal+=7;
+                    }
+                    else if(S.equals("Seven"))
+                    {
+                        sTotal+=6;
+                    }
+                    else if(S.equals("Six"))
+                    {
+                        sTotal+=5;
+                    }
+                    else if(S.equals("Five"))
+                    {
+                        sTotal+=4;
+                    }
+                    else if(S.equals("Four"))
+                    {
+                        sTotal+=3;
+                    }
+                    else if(S.equals("Three"))
+                    {
+                        sTotal+=2;
+                    }
+                    else if(S.equals("Deuce"))
+                    {
+                        sTotal+=1;
+                    }
+                    else if(S.equals("Spades"))
+                    {
+                        sTotal+=4;
+                    }
+                    else if(S.equals("Hearts"))
+                    {
+                        sTotal+=3;
+                    }
+                    else if(S.equals("Diamonds"))
+                    {
+                        sTotal+=2;
+                    }
+                    else if(S.equals("Clubs"))
+                    {
+                        sTotal+=1;
+                    }
+                    else
+                    {
+                        
+                    }
+                    tempCounterS +=2;
+                }
+            }
+            System.out.println(sTotal);
+            
+            if((pTotal>qTotal)&&(pTotal>rTotal)&&(pTotal>sTotal))
+            {
+                System.out.println("Congrats! P hand wins with " + pTotal + " points!!");
+            }
+            else if((qTotal>pTotal)&&(qTotal>rTotal)&&(qTotal>sTotal))
+            {
+                System.out.println("Congrats! Q hand wins with " + qTotal + " points!!");
+            }
+            else if((rTotal>pTotal)&&(rTotal>qTotal)&&(rTotal>sTotal))
+            {
+                System.out.println("Congrats! R hand wins with " + rTotal + " points!!");
+            }
+            else if((sTotal>pTotal)&&(sTotal>qTotal)&&(sTotal>rTotal))
+            {
+                System.out.println("Congrats! S hand wins with " + sTotal + " points!!");
+            }
+            else
+            {
+                System.out.println("Thers has been a tie! No winners!!");
+            }
+        } 
+    }
+
+}
