@@ -1,0 +1,149 @@
+//Property of
+//Enrique F. Espinet
+//Data Security
+//April 5, 2016
+
+package data.security;
+
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+
+/**
+ * @author Enrique
+ */
+public class DataSecurity {
+
+    /**
+     * @param args the command line arguments
+     */
+    public static void main(String[] args) {
+            JFrame frame = new JFrame("Input Dialog #1");
+            String userInput = JOptionPane.showInputDialog(frame, "To confirm you are human please" + "\n" + "           enter your firt name",
+                    "                                  Encryption Pro", JOptionPane.WARNING_MESSAGE);
+            //grab user name to use for encoding
+            int nameSize = userInput.length();//get the amount of letters in the name
+            int[] nameArray = new int[nameSize];//create an array to store the ascii value of the user input
+            System.out.println(nameSize);//just for testing....
+            int temp1;//a temporary value used later
+            
+            for(int a = 0; a < nameSize; a++)//convert each letter to its ascii value and store it into the nameArray[]
+            {
+                temp1 = 0;//initialize temp1 to 0 every loop
+                temp1 = (int)(userInput.charAt(a));//grab each letter and gets its ascii value and put it into temp1
+                nameArray[a] = temp1;//store temp1 into nameArray
+// to test out....(ignore)System.out.println(nameArray[a]); *this is used to make sure we have the correct ascii value for each letter
+            }
+            JFrame frame2 = new JFrame("Input Dialog #1");
+            String stringFaveNum = JOptionPane.showInputDialog(frame2, "Please enter a number between 20-30",
+                    "                                  Encryption Pro", JOptionPane.WARNING_MESSAGE);
+            //A pop up message used to ask the user for a input
+            /*
+            grab a number to manipulate the user name by
+            */
+            
+            int faveNum = Integer.parseInt(stringFaveNum);
+            //convert the string value to an int value
+            for(int b = 0;b < nameSize; b++)
+            {
+                //change the ascii value of each letter of user input by the number they inputed
+                nameArray[b] = (nameArray[b] / faveNum);
+//                System.out.println(nameArray[b]); <---- used just for testing...
+            }
+            int[] secretNum = {1,3,5,7,9,11,13,15,14,12,10,8,6,4,2,1,3,5,7,9,11,13,15,14,12,10,8,6,4,2,1,3,5,7,9,11,13,15,14,12,10,8,
+                              6,4,2,1,3,5,7,9,11,13,15,14,12,10,8,6,4,2,1,3,5,7,9,11,13,15,14,12,10,8,6,4,2,1,3,5,7,9,11,13,15,14,12,10,8,6,4,2,
+                              1,3,5,7,9,11,13,15,14,12,10,8,6,4,2,1,3,5,7,9,11,13,15,14,12,10,8,6,4,2,1,3,5,7,9,11,13,15,14,12,10,8,6,4,2,
+                              1,3,5,7,9,11,13,15,14,12,10,8,6,4,2,1,3,5,7,9,11,13,15,14,12,10,8,6,4,2,1,3,5,7,9,11,13,15,14,12,10,8,6,4,2,
+                              1,3,5,7,9,11,13,15,14,12,10,8,6,4,2,1,3,5,7,9,11,13,15,14,12,10,8,6,4,2,1,3,5,7,9,11,13,15,14,12,10,8,6,4,2,
+                              1,3,5,7,9,11,13,15,14,12,10,8,6,4,21,3,5,7,9,11,13,15,14,12,10,8,6,4,21,3,5,7,9,11,13,15,14,12,10,8,6,4,2};
+            /*
+            the array filled with secret numbers to manipulate the phrase later on...
+            composes of increasing odd numbers from 1 to 15, then decreasing even numbers from 14-2. repeat afterwards
+            */
+            int ratio = (int) Math.floor(((secretNum.length)/(nameArray.length)));
+            //calculate how many times does the user name fits into the secretNum array
+            for(int c = 0; c < ratio; c++)
+            {//loop for each time the user name fits into secretNum array
+                for(int d = 0 + (nameArray.length * c); d < ((nameArray.length * c) + nameArray.length); d++)
+                {//loop for the length of the user name input
+                    if(d <= secretNum.length)//make sure its within the boundary of the secretNum array
+                    {
+                        secretNum[d] = ((secretNum[d]) + nameArray[d - (nameSize * c)]);
+                        //increment the secretNum[d] by the value obtained earlier
+                        
+// this is for testing...(ignore)   System.out.println(secretNum[d]);
+                    }
+                    else//if out of bounds, break out of innermost for loop
+                    {
+                        break;
+                    }
+                }
+            }
+            
+            JFrame frame3 = new JFrame("Input Dialog #1");
+            String phrase = JOptionPane.showInputDialog(frame3,"Enter a phrase to encrypt through Encryption Pro", "Encryption Pro",
+                    JOptionPane.INFORMATION_MESSAGE);
+            //ask user for phrase to encrypt
+            String[] stringTemp = phrase.split("");
+            //split up the user input by "space" and put into a string array
+            int phraseSize = stringTemp.length;
+            //find out how many words they put in..
+            int[] decrypted = new int[phraseSize];
+            //create an int array for the ascii value of the user input message
+            //just for testing...(ignore)   System.out.println(decrypted.length);
+            int temp2;//a temp value to mess around with
+            System.out.println(phrase);//print out the decrypted message
+            for(int a = 0; a < phraseSize; a++)
+            {
+                //convert the message into its ascii value
+                temp2 = 0;
+                temp2 = (int)(phrase.charAt(a));
+                //once ascii value has been found, store it into the decrypted array
+                decrypted[a] = temp2;
+                System.out.print(decrypted[a] + " ");
+            }
+            //////////////////////////////////////////////////////////////////////////////
+            /*
+            here starts the encrypting process
+            */
+            System.out.println("");//used for entering a new line for clarity..
+            int[] encrypted = new int[phraseSize];
+            //create an int array for the encrypted message
+            for(int a = 0; a < phraseSize; a++)
+            {
+                encrypted[a] = decrypted[a] - secretNum[a];
+                //encrypt the decrypted letters by the diference of the secret num number
+//just for testing----(ignore)      System.out.print(encrypted[a]);
+                char c = (char)encrypted[a];//turns the ascii value into characters
+                System.out.print(c + " ");
+                //prints out the encrypted message
+            }
+            System.out.println("");//prints out a new line
+            
+            /////////////////////////////////////////////////////////////////////////////////////////
+            /*
+            here starts the decrypting process
+            */
+            
+            int[] originalMessage = new int[encrypted.length];
+            //creates a new array that will store the original message once its been decrypted..
+            for(int a = 0; a < encrypted.length;a++)
+            {
+                //copy the encrypted message into a new array
+                originalMessage[a] = encrypted[a];
+            }
+            
+            for(int a = 0; a < encrypted.length;a++)
+            {
+                //decrypt the secret message back to its original message
+                originalMessage[a] = originalMessage[a] + secretNum[a];
+            }
+            for(int a = 0; a < originalMessage.length;a++)
+            {
+                //convert the ascii value to char and print it out, thus revealing the original decrypted message
+                char d = (char)originalMessage[a];
+                System.out.print(d);
+            }
+            
+    }
+    
+}
