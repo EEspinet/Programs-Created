@@ -1,0 +1,180 @@
+/*
+ *Created By Enrique Espinet
+ *February 21, 2018
+ */
+package amoeba.colony;
+
+import java.util.*;
+/**
+ *
+ * @author Enrique
+ */
+public class AmoebaColony {
+    
+    String colonyName;
+    String careTakerName;
+    int startingSize;
+    int feedNum;
+    int breedNum;
+    String takeVitamin;
+    int reproduceAmount;
+    
+    int finalSize;
+    int amountDied;
+    String gotSick;
+    
+    public AmoebaColony(String colonyName,String name,int startingSize,int feed,int breed,String vitamin)
+    {
+        this.colonyName = colonyName;
+        this.careTakerName = name;
+        this.startingSize = startingSize;
+        this.feedNum = feed;
+        this.breedNum = breed;
+        this.takeVitamin = vitamin;
+    }
+  
+    //<-------------------------Getters & Setters------------------------------>
+    
+    public String getColonyName() {
+        return colonyName;
+    }
+
+    public void setColonyName(String colonyName) {
+        this.colonyName = colonyName;
+    }
+
+    public String getCareTakerName() {
+        return careTakerName;
+    }
+
+    public void setCareTakerName(String careTakerName) {
+        this.careTakerName = careTakerName;
+    }
+
+    public int getStartingSize() {
+        return startingSize;
+    }
+
+    public void setStartingSize(int startingSize) {
+        this.startingSize = startingSize;
+    }
+
+    public int getFeedNum() {
+        return feedNum;
+    }
+
+    public void setFeedNum(int feedNum) {
+        this.feedNum = feedNum;
+    }
+
+    public int getBreedNum() {
+        return breedNum;
+    }
+
+    public void setBreedNum(int breedNum) {
+        this.breedNum = breedNum;
+    }
+
+    public String getTakeVitamin() {
+        return takeVitamin;
+    }
+
+    public void setTakeVitamin(String takeVitamin) {
+        this.takeVitamin = takeVitamin;
+    }
+    
+    public int getReproduceAmount()
+    {
+        return reproduceAmount;
+    }
+    
+    public int getFinalSize()
+    {
+        return finalSize;
+    }
+    
+    public String getGotSick()
+    {
+        return gotSick;
+    }
+    
+    public int getAmountDied()
+    {
+        return amountDied;
+    }
+    
+    //<----------------------End of Getters & Setters-------------------------->
+    
+    public void reproduceAmount()//Method for calculating amount of times to reproduce
+    {
+        if(feedNum < breedNum)//If amount of feed is less than breed, the reproduce amount will be equal to feed
+        {
+            reproduceAmount = feedNum;
+        }
+        else
+        {
+            reproduceAmount = breedNum;//If amount of breed is greater or equal to feed, the reproduce amount will be equal to breed
+        }
+        
+    }
+    
+    public void reproduce()//method used to reproduce the colony and acquire final size
+    {
+        for(int i = 0; i < reproduceAmount;i++)//Loop used to calculate final reproduction size
+        {
+            startingSize = startingSize * 2;
+        }
+        finalSize = startingSize;//final size of the colony
+        
+        
+        if(takeVitamin.equalsIgnoreCase("yes"))//If they took vitamins, perform this..
+        {
+            Random r = new Random();
+            int x = 1 + r.nextInt(5);
+            int sickProb = x;
+        
+            if(sickProb == 1)//Testing whether it is in the bottom 25% and it did get sick
+            {
+                amountDied = finalSize;
+                finalSize = (finalSize * 90)/100;//Used for acquiring final size of colony after 10% dies
+                amountDied = amountDied - finalSize;
+                gotSick = "yes";
+                System.out.println("It got sick");//used for testing purposes
+            }
+            
+            else//Testing whether it is in top 75% and it did NOT get sick
+            {
+                //do nothing
+                gotSick = "no";
+                System.out.println("Did NOT get sick");//used for testing purposes
+            }
+        }
+        
+        else//If they did NOT take vitamins, perform this..
+        {
+            //Random number. Used to calculate 25% of getting sick
+            Random r = new Random();
+            int x = 1 + r.nextInt(4);
+            int sickProb = x;
+        
+            if(sickProb == 1)//Testing whether it is in the bottom 25% and it did get sick
+            {
+                amountDied = finalSize;
+                finalSize = (finalSize * 90)/100;//Used for acquiring final size of colony after 10% dies
+                amountDied = amountDied - finalSize;
+                gotSick = "yes";
+                System.out.println("Got sick");//Used for testing purposes
+            }
+            
+            else//Testing whether it is in top 75% and it did NOT get sick
+            {
+                //do nothing
+                gotSick = "no";
+                System.out.println("Did NOT get sick");//used for testing purposes
+            }
+        }
+        
+    }
+    
+    
+}
