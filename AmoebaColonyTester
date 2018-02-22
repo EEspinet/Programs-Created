@@ -1,0 +1,69 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package amoeba.colony;
+
+import javax.swing.JOptionPane;
+import java.util.*;
+
+/**
+ *
+ * @author Enrique
+ */
+public class AmoebaColonyTester {
+
+    /**
+     * @param args the command line arguments
+     */
+    public static void main(String[] args) {
+        
+        String colonyName;
+        String careTakerName;
+        String startingSizeTemp;
+        int startingSize;
+        String feedNumTemp;
+        int feedNum;
+        String breedNumTemp;
+        int breedNum;
+        String takeVitamin;
+        
+        //Acquire the initial information
+        careTakerName = JOptionPane.showInputDialog(null,"Greetings! What is your name?");
+        colonyName = JOptionPane.showInputDialog(null,"What would you like your amoeba colony to be named?");
+        
+        startingSizeTemp = JOptionPane.showInputDialog(null,"What initial size would you like your amoeba colony to be?");
+        startingSize = Integer.parseInt(startingSizeTemp);
+        
+        feedNumTemp = JOptionPane.showInputDialog(null, "How many times would you like to feed " + colonyName);
+        feedNum = Integer.parseInt(feedNumTemp);
+        
+        breedNumTemp = JOptionPane.showInputDialog(null, "How many times would you like " + colonyName + " to breed?");
+        breedNum = Integer.parseInt(breedNumTemp);
+        
+        takeVitamin = JOptionPane.showInputDialog(null,"Would you like to give " + colonyName + " vitamins? Type 'Yes' Or 'No'");
+        
+        //Create a new AmoebaColony named colony and give it its initial parameters
+        AmoebaColony colony = new AmoebaColony(colonyName,careTakerName,startingSize,feedNum,breedNum,takeVitamin);
+        
+        //Call the method which will calculate the amount of times it will reproduce
+        colony.reproduceAmount();
+        
+        //Call the method to calculate the final population
+        colony.reproduce();
+        
+        //Print out the final colony size.
+        JOptionPane.showMessageDialog(null, "The final size for " + colonyName + " is " + colony.getFinalSize());
+        
+        JOptionPane.showMessageDialog(null, "Colony Name: " + colonyName + '\n'
+        + "CareTaker Name: " + careTakerName + '\n' + "Starting Size: " + startingSize + '\n'
+        + "Amount of times fed: " + feedNum + '\n' + "Requested number of times to breed: " + breedNum + '\n'
+        + "Number of times Successfully Bred: " + colony.getReproduceAmount() + '\n'
+        + "Did it get sick? " + colony.getGotSick() + '\n' + "How many died: " + colony.getAmountDied() + '\n'
+        + "Final Colony Size: " + colony.getFinalSize());
+        
+        
+    }
+    
+}
